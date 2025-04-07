@@ -117,3 +117,31 @@ class _StorefrontScreenState extends State<StorefrontScreen> {
     );
   }
 }
+#-------Flutter Button to Trigger Payment----
+ import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+
+Future<void> startStripeCheckout() async {
+  final response = await http.post(
+    Uri.parse("http://localhost:8000/create-checkout-session"),
+  );
+
+  if (response.statusCode == 200) {
+    final body = json.decode(response.body);
+    final url = body['url'];
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch Stripe Checkout';
+    }
+  } else {
+    throw 'Failed to start checkout: ${response.body}';
+  }
+}
+#---Add a button----
+ElevatedButton(
+  onPressed: startStripeCheckout,
+  child: Text("Pay with Stripe"),
+)
+
