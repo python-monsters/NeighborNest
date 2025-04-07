@@ -144,6 +144,24 @@ async def stripe_webhook(request: Request):
         raise HTTPException(status_code=400, detail=str(e))
 
     return {"received": True}
+#------create checkout session-----
+@app.post("/create-checkout-session")
+def create_checkout_session():
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {'name': 'Auction Item'},
+                'unit_amount': 5000,  # $50.00
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url='https://your-app.com/success',
+        cancel_url='https://your-app.com/cancel',
+    )
+    return {"id": session.id, "url": session.url}
 
 # --- Utilities ---
 
