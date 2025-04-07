@@ -9,12 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.13.1
-  firebase_auth: ^4.6.2
-  firebase_database: ^10.2.2
-  shared_preferences: ^2.1.1
-  http: ^0.13.5
-  url_launcher: ^6.1.10
+    image_picker: ^1.0.4
+    firebase_storage: ^11.2.6
+    carousel_slider: ^4.2.1
+    firebase_core: ^2.13.1
+    firebase_auth: ^4.6.2
+    firebase_database: ^10.2.2
+    shared_preferences: ^2.1.1
+    http: ^0.13.5
+    url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
