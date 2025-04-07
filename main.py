@@ -1,4 +1,6 @@
 
+import requests
+from fastapi import Request
 from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
@@ -162,6 +164,29 @@ def create_checkout_session():
         cancel_url='https://your-app.com/cancel',
     )
     return {"id": session.id, "url": session.url}
+
+#0-----Calculate Shipping Cost------
+@app.get("/calculate-shipping")
+def calculate_shipping(weight_oz: float, origin_zip: str, dest_zip: str):
+    USPS_USER_ID = os.getenv("USPS_USER_ID")
+    url = "http://production.shippingapis.com/ShippingAPI.dll"
+    xml_payload = f"""<RateV4Request USERID='{USPS_USER_ID}'>
+        <Revision>2</Revision>
+        <Package ID='1ST'>
+            <Service>PRIORITY</Service>
+            <ZipOrigination>{origin_zip}</ZipOrigination>
+            <ZipDestination>{dest_zip}</ZipDestination>
+            <Pounds>0</Pounds>
+            <Ounces>{weight_oz}</Ounces>
+            <Container/>
+            <Size>REGULAR</Size>
+            <Machinable>true</Machinable>
+        </Package>
+    </RateV4Request>"""
+    payload = {"API": "RateV4", "XML": xml_payload}
+    response = requests.get(url, params=payload)
+    return response.text
+
 
 # --- Utilities ---
 
