@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import List
 import mysql.connector
 import os
 import stripe
@@ -48,6 +48,18 @@ class Bid(BaseModel):
     listing_id: int
     user_id: int
     amount: float
+
+
+#----Image Listings------
+
+@app.post("/listings/{id}/images")
+def upload_image_urls(id: int, urls: List[str]):
+    db = get_db()
+    cursor = db.cursor()
+    for url in urls:
+        cursor.execute("INSERT INTO listing_images (listing_id, url) VALUES (%s, %s)", (id, url))
+    db.commit()
+    return {"message": "Images saved"}
 
 # --- Auth Endpoints ---
 
