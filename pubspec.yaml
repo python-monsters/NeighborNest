@@ -1,0 +1,24 @@
+name: neighbornest
+description: Full-featured auction + storefront Flutter app using Firebase + Stripe
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.13.1
+  firebase_auth: ^4.6.2
+  firebase_database: ^10.2.2
+  shared_preferences: ^2.1.1
+  http: ^0.13.5
+  url_launcher: ^6.1.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
