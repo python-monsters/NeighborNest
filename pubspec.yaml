@@ -22,3 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+#--After Saving This---
+flutter pub get
+Make sure google-services.json is added if you’re on Android.
+Use startStripeCheckout() in your app wherever needed.
