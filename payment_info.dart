@@ -21,7 +21,7 @@ class PaymentInfoScreen extends StatelessWidget {
               onPressed: () {
                 // Normally store via Stripe; here we just simulate
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("✅ Payment Info Saved (simulated)")),
+                  SnackBar(content: Text(" Payment Info Saved (simulated)")),
                 );
                 Navigator.pop(context, true);
               },
