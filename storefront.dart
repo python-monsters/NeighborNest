@@ -145,3 +145,18 @@ ElevatedButton(
   child: Text("Pay with Stripe"),
 )
 
+#--Images Selected----
+  List<XFile> selectedImages = [];
+
+Future<void> pickImages() async {
+  final images = await ImagePicker().pickMultiImage();
+  if (images != null) setState(() => selectedImages = images);
+}
+
+CarouselSlider(
+  options: CarouselOptions(height: 200),
+  items: selectedImages.map((img) {
+    return Image.file(File(img.path), fit: BoxFit.cover);
+  }).toList(),
+)
+ #send image URLs to /listings/{id}/images via HTTP
